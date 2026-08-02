@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruxinha • Tarot, Magia & Terapias Holísticas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">✦ Bruxinha</div>
+    <nav>
+      <a href="#sobre">Comunidade</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#agendamento">Agendamento</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO / APRESENTAÇÃO -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-text">
+      <span class="badge">Tarot • Magia • Cura</span>
+      <h1>Um caminho de clareza para sua jornada</h1>
+      <p style="color: var(--text-muted); max-width: 480px; margin-bottom: 1.5rem;">
+        Leituras de tarot, limpeza energética, terapias holísticas e rituais de cura conduzidos com escuta,
+        cuidado e tradição. Cada consulta é um espaço seguro para transformação.
+      </p>
+      <a href="#agendamento" class="btn-primary">Agendar consulta</a>
+      <a href="#servicos" class="btn-secondary" style="margin-left: 0.8rem;">Ver serviços</a>
+    </div>
+    <div class="hero-image">
+      <svg viewBox="0 0 300 300" width="100%" style="max-width:320px; border-radius:12px; border:2px solid var(--primary); box-shadow:0 10px 25px rgba(0,0,0,0.5); background: radial-gradient(circle at 50% 35%, #2b091e, #120913 70%);">
+        <circle cx="150" cy="110" r="55" fill="none" stroke="#ee4540" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="150" cy="110" r="38" fill="#ee4540" opacity="0.15"/>
+        <path d="M172 90 a38 38 0 1 0 0 40 a30 30 0 1 1 0 -40" fill="#fbeee0" opacity="0.9"/>
+        <g stroke="#c72c41" stroke-width="1" opacity="0.6">
+          <line x1="150" y1="185" x2="150" y2="260"/>
+          <line x1="110" y1="230" x2="190" y2="230"/>
+        </g>
+        <text x="150" y="250" text-anchor="middle" font-family="Cinzel, serif" font-size="14" fill="#a392a0" letter-spacing="3">BRUXINHA</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="moon-divider" aria-hidden="true">
+  <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
+</div>
+
+<!-- SOBRE / PRESENÇA DIGITAL -->
+<section class="sobre container" id="sobre">
+  <h2>Presença &amp; Comunidade</h2>
+  <p class="secao-intro">Conteúdo semanal sobre tarot, magia e autoconhecimento nas redes — em breve com vídeos de apresentação e loja própria.</p>
+
+  <div class="social-grid">
+    <div class="social-card">
+      <span class="numero" data-contador="501">501</span>
+      <span class="rede">Inscritos · YouTube</span>
+    </div>
+    <div class="social-card">
+      <span class="numero" data-contador="44000" data-contador-sufixo="+">44K</span>
+      <span class="rede">Seguidores · Instagram</span>
+    </div>
+    <div class="social-card">
+      <span class="numero">Em breve</span>
+      <span class="rede">TikTok</span>
+    </div>
+    <div class="social-card">
+      <span class="numero">Em breve</span>
+      <span class="rede">Loja &amp; Assinaturas</span>
+    </div>
+  </div>
+
+  <div class="video-grid">
+    <div class="video-placeholder" data-video="https://youtu.be/aSD73FfRUK4?si=kQfmpgW71lmRr3pR" role="button" tabindex="0" aria-label="Abrir vídeo de apresentação do canal">
+      <div class="play">▶</div>
+      Vídeo de apresentação do canal
+    </div>
+    <div class="video-placeholder" data-video="https://www.instagram.com/bruxinhateresaferrini?igsh=dTQxaHF5ZGYxZDV3" role="button" tabindex="0" aria-label="Abrir perfil do Instagram">
+      <div class="play">▶</div>
+      Vídeo curto · Instagram <span class="status-em-breve">reels</span>
+    </div>
+    <div class="video-placeholder" data-video="https://youtube.com/@bruxinhateresaferrini?si=0c1Y6rR1ePp9T1QN" role="button" tabindex="0" aria-label="Abrir canal do YouTube">
+      <div class="play">▶</div>
+      Canal do YouTube <span class="status-em-breve">inscreva-se</span>
+    </div>
+  </div>
+</section>
+
+<div class="moon-divider" aria-hidden="true">
+  <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
+</div>
+
+<!-- SERVIÇOS -->
+<section class="servicos container" id="servicos">
+  <h2>Serviços</h2>
+  <p class="secao-intro">Toque em cada área para ver os atendimentos, durações e valores.</p>
+
+  <div class="cards-grid" id="lista-servicos" style="grid-template-columns: 1fr;">
+
+    <!-- TAROT -->
+    <div class="card-servico destaque">
+      <button class="card-servico-header" data-toggle>
+        Tarot
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item">
+          <div><span class="nome-sub">Leitura Completa — Online</span><span class="detalhe-sub">Consulta completa por chamada de vídeo</span></div>
+          <span class="preco-sub">R$ 800,00</span>
+        </div>
+        <div class="sub-item">
+          <div><span class="nome-sub">Leitura Completa — Presencial</span><span class="detalhe-sub">Duração de 1 hora</span></div>
+          <span class="preco-sub">R$ 350,00</span>
+        </div>
+        <div class="sub-item">
+          <div><span class="nome-sub">Consulta Pontual</span><span class="detalhe-sub">Para uma questão específica</span></div>
+          <span class="preco-sub">R$ 300,00</span>
+        </div>
+        <div class="sub-item">
+          <div><span class="nome-sub">Templo de Afrodite</span><span class="detalhe-sub">30 min · entrega em até 2 dias úteis</span></div>
+          <span class="preco-sub">R$ 530,00</span>
+        </div>
+        <a href="tarot.html" class="ver-mais">Saiba mais sobre Tarot →</a>
+      </div>
+    </div>
+
+    <!-- DIVÓRCIO ENERGÉTICO -->
+    <div class="card-servico">
+      <button class="card-servico-header" data-toggle>
+        Divórcio Energético
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item">
+          <div><span class="nome-sub">Limpeza &amp; Divórcio de Campo Energético</span><span class="detalhe-sub">Trabalho conduzido ao longo de 23 dias</span></div>
+          <span class="preco-sub">R$ 800,00</span>
+        </div>
+        <a href="divorcio-energetico.html" class="ver-mais">Saiba mais sobre Divórcio Energético →</a>
+      </div>
+    </div>
+
+    <!-- MAGIA -->
+    <div class="card-servico">
+      <button class="card-servico-header" data-toggle>
+        Magia
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item"><div><span class="nome-sub">Prosperidade</span></div><span class="preco-sub">Consultar</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Amor</span></div><span class="preco-sub">Consultar</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Saúde</span></div><span class="preco-sub">Consultar</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Banimento</span><span class="detalhe-sub">Descarga energética</span></div><span class="preco-sub">Consultar</span></div>
+        <div class="aviso-magia">✳ Trabalhos de magia são realizados somente após consulta de Tarot.</div>
+        <a href="magia.html" class="ver-mais">Saiba mais sobre Magia →</a>
+      </div>
+    </div>
+
+    <!-- TERAPIAS HOLÍSTICAS -->
+    <div class="card-servico">
+      <button class="card-servico-header" data-toggle>
+        Terapias Holísticas
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item"><div><span class="nome-sub">Reiki</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Terapia Floral</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Cromoterapia</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Equilíbrio de Chakras</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="aviso-magia">✳ Uma sessão pode englobar todas as técnicas acima.</div>
+        <a href="terapias-holisticas.html" class="ver-mais">Saiba mais sobre Terapias Holísticas →</a>
+      </div>
+    </div>
+
+    <!-- RODA DE CURA — MULHERES -->
+    <div class="card-servico">
+      <button class="card-servico-header" data-toggle>
+        Roda de Cura — Mulheres
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item"><div><span class="nome-sub">Empoderamento</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Traumas Passados</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Relacionamento Abusivo</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="sub-item"><div><span class="nome-sub">Reprogramação Mental &amp; Ancestralidade</span></div><span class="preco-sub">R$ 800,00 /sessão</span></div>
+        <div class="aviso-magia">✳ Uma sessão pode englobar todos os temas acima.</div>
+        <a href="roda-de-cura-mulheres.html" class="ver-mais">Saiba mais sobre a Roda de Cura →</a>
+      </div>
+    </div>
+
+    <!-- CURSOS -->
+    <div class="card-servico">
+      <button class="card-servico-header" data-toggle>
+        Cursos
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item">
+          <div><span class="nome-sub">Curso de Wicca</span><span class="detalhe-sub">Carga horária de 10 horas</span></div>
+          <span class="preco-sub">R$ 6.200,00</span>
+        </div>
+        <div class="sub-item">
+          <div><span class="nome-sub">Curso de Tarot</span><span class="detalhe-sub">Carga horária de 10 horas</span></div>
+          <span class="preco-sub">R$ 6.200,00</span>
+        </div>
+        <a href="cursos.html" class="ver-mais">Saiba mais sobre os Cursos →</a>
+      </div>
+    </div>
+
+    <!-- PALESTRAS E EVENTOS -->
+    <div class="card-servico">
+      <button class="card-servico-header" data-toggle>
+        Palestras &amp; Eventos Corporativos
+        <span class="chevron">▾</span>
+      </button>
+      <div class="sub-servicos">
+        <div class="sub-item">
+          <div><span class="nome-sub">Palestra / Evento Corporativo</span><span class="detalhe-sub">Evento de 6 horas</span></div>
+          <span class="preco-sub">R$ 8.000,00</span>
+        </div>
+        <a href="palestras-eventos.html" class="ver-mais">Saiba mais sobre Palestras &amp; Eventos →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="moon-divider" aria-hidden="true">
+  <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
+</div>
+
+<!-- AGENDAMENTO -->
+<section class="agendamento container" id="agendamento">
+  <h2>Agendamento</h2>
+  <div class="agenda-wrapper">
+    <div>
+      <label for="data-consulta" style="display:block; margin-bottom:0.6rem; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Escolha a data</label>
+      <input type="date" id="data-consulta" class="input-date">
+    </div>
+    <div>
+      <label style="display:block; margin-bottom:0.6rem; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Escolha o horário</label>
+      <div class="horarios-grid" id="horarios">
+        <button type="button" class="btn-horario">09:00</button>
+        <button type="button" class="btn-horario">11:00</button>
+        <button type="button" class="btn-horario">14:00</button>
+        <button type="button" class="btn-horario">16:00</button>
+        <button type="button" class="btn-horario">18:00</button>
+        <button type="button" class="btn-horario">20:00</button>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn-confirmar" id="btn-confirmar-agenda">Confirmar agendamento</button>
+  <p id="msg-agenda" style="margin-top:1rem; color: var(--gold); font-size:0.9rem; min-height: 1.2em;"></p>
+</section>
+
+<!-- CADASTRO -->
+<section class="cadastro container" id="cadastro">
+  <h2 style="text-align:center; margin-bottom:2rem; font-size:2rem; color:var(--gold);">Cadastro Rápido</h2>
+  <p class="secao-intro">Só o essencial para entrarmos em contato sobre sua consulta.</p>
+  <form class="form-cadastro" id="form-cadastro">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+    </div>
+    <div class="form-group">
+      <label for="telefone">Telefone <span class="opcional">(não precisa ser completo)</span></label>
+      <input type="tel" id="telefone" name="telefone" placeholder="(  ) _____-____">
+    </div>
+    <button type="submit" class="btn-primary">Enviar cadastro</button>
+    <p id="msg-cadastro" style="color: var(--gold); font-size:0.9rem; min-height: 1.2em;"></p>
+  </form>
+</section>
+
+<div class="moon-divider" aria-hidden="true">
+  <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
+</div>
+
+<!-- PAGAMENTO -->
+<section class="container" id="pagamento">
+  <h2 style="text-align:center; margin-bottom:2rem; font-size:2rem; color:var(--gold);">Formas de Pagamento</h2>
+  <div class="payment-grid">
+    <div class="payment-card">
+      <span class="icone">💳</span>
+      <span class="metodo">Débito</span>
+    </div>
+    <div class="payment-card">
+      <span class="icone">☾</span>
+      <span class="metodo">Pix</span>
+    </div>
+    <div class="payment-card">
+      <span class="icone">💳</span>
+      <span class="metodo">Crédito</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-socials">
+    <a href="https://youtube.com/@bruxinhateresaferrini?si=0c1Y6rR1ePp9T1QN" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.instagram.com/bruxinhateresaferrini?igsh=dTQxaHF5ZGYxZDV3" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+  </div>
+  <div class="footer-socials" style="margin-top: -0.4rem;">
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="privacidade.html">Política de Privacidade</a>
+    <a href="termos.html">Termos de Uso</a>
+  </div>
+  <div class="container" style="padding: 0;">
+    &copy; <span id="ano"></span> Bruxinha — Tarot, Magia &amp; Terapias Holísticas. Todos os direitos reservados.
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+
+</body>
+</html>

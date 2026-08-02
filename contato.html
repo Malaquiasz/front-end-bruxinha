@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contato • Bruxinha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">✦ Bruxinha</div>
+    <nav>
+      <a href="index.html#sobre">Comunidade</a>
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#agendamento">Agendamento</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Fale comigo</span>
+    <h1>Entre em contato</h1>
+    <p>Dúvidas sobre atendimentos, valores ou disponibilidade? Me envie uma mensagem e retornarei o mais breve possível.</p>
+  </div>
+</section>
+
+<div class="moon-divider" aria-hidden="true">
+  <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
+</div>
+
+<main class="container">
+  <nav class="breadcrumb">
+    <a href="index.html">Início</a> › Contato
+  </nav>
+
+  <div class="contato-grid">
+    <div class="contato-info">
+      <div class="item-contato">
+        <span class="rotulo">E-mail</span>
+        <span class="valor">contato@bruxinha.com.br</span>
+      </div>
+      <div class="item-contato">
+        <span class="rotulo">Instagram</span>
+        <span class="valor">@bruxinhateresaferrini</span>
+      </div>
+      <div class="item-contato">
+        <span class="rotulo">YouTube</span>
+        <span class="valor">@bruxinhateresaferrini</span>
+      </div>
+      <div class="item-contato">
+        <span class="rotulo">Atendimento</span>
+        <span class="valor">Online (chamada de vídeo) e presencial — mediante agendamento</span>
+      </div>
+      <div class="item-contato">
+        <span class="rotulo">Horário de resposta</span>
+        <span class="valor">Em até 1 dia útil</span>
+      </div>
+    </div>
+
+    <form class="form-cadastro" id="form-contato" style="max-width:100%;">
+      <div class="form-group">
+        <label for="contato-nome">Nome</label>
+        <input type="text" id="contato-nome" name="nome" placeholder="Seu nome" required>
+      </div>
+      <div class="form-group">
+        <label for="contato-email">E-mail</label>
+        <input type="email" id="contato-email" name="email" placeholder="seu@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="contato-assunto">Assunto</label>
+        <input type="text" id="contato-assunto" name="assunto" placeholder="Sobre qual serviço deseja falar?">
+      </div>
+      <div class="form-group">
+        <label for="contato-mensagem">Mensagem</label>
+        <textarea id="contato-mensagem" name="mensagem" placeholder="Escreva sua mensagem aqui..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Enviar mensagem</button>
+      <p id="msg-contato" style="color: var(--gold); font-size:0.9rem; min-height: 1.2em;"></p>
+    </form>
+  </div>
+</main>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Prefere agendar direto?</h2>
+    <p>Escolha a data e o horário que funcionam melhor para você.</p>
+    <a href="index.html#agendamento" class="btn-primary">Agendar consulta</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-socials">
+    <a href="https://youtube.com/@bruxinhateresaferrini?si=0c1Y6rR1ePp9T1QN" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.instagram.com/bruxinhateresaferrini?igsh=dTQxaHF5ZGYxZDV3" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+  </div>
+  <div class="footer-socials" style="margin-top: -0.4rem;">
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="privacidade.html">Política de Privacidade</a>
+    <a href="termos.html">Termos de Uso</a>
+  </div>
+  <div class="container" style="padding: 0;">
+    &copy; <span id="ano"></span> Bruxinha — Tarot, Magia &amp; Terapias Holísticas. Todos os direitos reservados.
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+<script>
+document.getElementById('form-contato').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var msg = document.getElementById('msg-contato');
+  var nome = document.getElementById('contato-nome').value.trim();
+  var email = document.getElementById('contato-email').value.trim();
+  var mensagem = document.getElementById('contato-mensagem').value.trim();
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!nome || !emailRegex.test(email) || !mensagem) {
+    msg.textContent = '✦ Preencha nome, e-mail válido e mensagem para enviar.';
+    return;
+  }
+  msg.textContent = '☾ Mensagem enviada! Retornarei o mais breve possível. ✦';
+  e.target.reset();
+});
+</script>
+</body>
+</html>
+

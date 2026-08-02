@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termos de Uso • Bruxinha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <div class="logo">✦ Bruxinha</div>
+    <nav>
+      <a href="index.html#sobre">Comunidade</a>
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#agendamento">Agendamento</a>
+      <a href="sobre.html">Sobre</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">Regras de uso</span>
+    <h1>Termos de Uso</h1>
+    <p>As condições que regem o uso deste site e dos serviços oferecidos.</p>
+  </div>
+</section>
+
+<div class="moon-divider" aria-hidden="true">
+  <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
+</div>
+
+<main class="container legal">
+  <nav class="breadcrumb">
+    <a href="index.html">Início</a> › Termos de Uso
+  </nav>
+
+  <span class="atualizado">Última atualização: <span class="data-atualizacao"></span></span>
+
+  <h2>1. Aceitação dos termos</h2>
+  <p>Ao acessar este site e utilizar os serviços, você concorda com os presentes Termos de Uso. Se não concordar, pedimos que não utilize o site.</p>
+
+  <h2>2. Natureza dos serviços</h2>
+  <ul>
+    <li>As leituras de tarot e oráculos têm caráter de orientação e autoconhecimento, não substituindo acompanhamento médico, psicológico ou jurídico;</li>
+    <li>As terapias holísticas e trabalhos energéticos são complementares e não substituem tratamentos de saúde convencionais;</li>
+    <li>Os resultados variam de pessoa para pessoa e não são garantidos.</li>
+  </ul>
+
+  <h2>3. Agendamento e pagamento</h2>
+  <p>Os serviços são agendados mediante confirmação de data e horário. O pagamento pode ser realizado por débito, crédito ou Pix. Em caso de desistência, entre em contato com antecedência para remarcar.</p>
+
+  <h2>4. Sigilo e conduta</h2>
+  <p>Todo conteúdo compartilhado durante os atendimentos é confidencial. É vedado o uso de gravações ou divulgação de conteúdo das consultas sem autorização prévia.</p>
+
+  <h2>5. Propriedade intelectual</h2>
+  <p>Todo o conteúdo deste site (textos, identidade visual, materiais e cursos) é de propriedade da Bruxinha. É proibida a reprodução sem autorização.</p>
+
+  <h2>6. Limitação de responsabilidade</h2>
+  <p>O site é fornecido "no estado em que se encontra". Não nos responsabilizamos por decisões tomadas com base nas orientações oferecidas, sendo o usuário o único responsável por suas escolhas.</p>
+
+  <h2>7. Alterações</h2>
+  <p>Estes termos podem ser atualizados periodicamente. A data de atualização constará no topo desta página.</p>
+
+  <h2>8. Contato</h2>
+  <p>Dúvidas sobre estes termos: <a href="contato.html" style="color:var(--gold);">página de Contato</a>.</p>
+</main>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Vamos conversar?</h2>
+    <p>Se tiver dúvidas, estou à disposição.</p>
+    <a href="contato.html" class="btn-primary">Falar comigo</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-socials">
+    <a href="https://youtube.com/@bruxinhateresaferrini?si=0c1Y6rR1ePp9T1QN" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://www.instagram.com/bruxinhateresaferrini?igsh=dTQxaHF5ZGYxZDV3" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+  </div>
+  <div class="footer-socials" style="margin-top: -0.4rem;">
+    <a href="sobre.html">Sobre</a>
+    <a href="contato.html">Contato</a>
+    <a href="privacidade.html">Política de Privacidade</a>
+    <a href="termos.html">Termos de Uso</a>
+  </div>
+  <div class="container" style="padding: 0;">
+    &copy; <span id="ano"></span> Bruxinha — Tarot, Magia &amp; Terapias Holísticas. Todos os direitos reservados.
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+<script>
+document.querySelectorAll('.data-atualizacao').forEach(function (el) {
+  el.textContent = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+});
+</script>
+</body>
+</html>
+
