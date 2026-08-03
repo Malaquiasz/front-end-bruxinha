@@ -3,16 +3,19 @@
    script.js
    ------------------------------------------------------------
    Interações do site:
+   • Atmosfera: estrelas, constelação, estrela cadente, neblina
+   • Cursor customizado (✦ / ☾)
+   • Carta de tarot com inclinação 3D seguindo o mouse
    • Ano automático no rodapé
    • Navegação suave (smooth scroll)
    • Navbar com sombra ao rolar + scrollspy
    • Menu mobile (hambúrguer)
-   • Animações de entrada (scroll reveal)
+   • Animações de entrada (scroll reveal com blur)
    • Contadores animados das redes sociais
    • Accordion de serviços (um aberto por vez)
    • Agendamento com data mínima + horários
    • Cadastro rápido com validação + máscara de telefone
-   • Modal de vídeo (YouTube / Instagram)
+   • Modal de vídeo (YouTube / Instagram) — "vela apagada"
    • Botão "voltar ao topo"
    ============================================================ */
 
@@ -22,6 +25,395 @@
   /* ---------- UTILITÁRIOS ---------- */
   var $ = function (sel, ctx) { return (ctx || document).querySelector(sel); };
   var $$ = function (sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); };
+
+  var podeAnimar = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches === false;
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+  var isMobile = window.matchMedia &&
+    (window.matchMedia('(max-width: 768px)').matches || window.matchMedia('(hover: none)').matches);
+
+  /* ==========================================================
+     LOOP DE ANIMAÇÃO COMPARTILHADO
+     ----------------------------------------------------------
+     Um único requestAnimationFrame para todas as animações
+     contínuas (canvas, chama, brilho, luz global).
+     • Desktop: ~60fps
+     • Mobile:  ~25fps (intervalo de 40ms)
+     • Pausa quando a aba não está visível (document.hidden)
+     Isso elimina o travamento causado por múltiplos rAF
+     rodando em paralelo no mobile.
+     ========================================================== */
+  var animadores = [];
+  var ultimoTick = 0;
+  var intervaloQuadro = isMobile ? 40 : 16;
+
+  function registrarAnimador(fn) {
+    if (animadores.indexOf(fn) === -1) animadores.push(fn);
+  }
+
+  function tickAnimacoes(agora) {
+    if (!document.hidden && agora - ultimoTick >= intervaloQuadro) {
+      ultimoTick = agora;
+      for (var i = 0; i < animadores.length; i++) {
+        try { animadores[i](agora); } catch (e) { /* ignora falha isolada de frame */ }
+      }
+    }
+    requestAnimationFrame(tickAnimacoes);
+  }
+  requestAnimationFrame(tickAnimacoes);
+
+  /* ==========================================================
+     ATMOSFERA — camada de fundo (estrelas + constelação)
+     ========================================================== */
+  function criarAtmosfera() {
+    if (!podeAnimar) return;
+
+    // Fundo fixo com vinheta + névoa
+    var fundo = $('.atmosfera-fundo');
+    if (!fundo) {
+      fundo = document.createElement('div');
+      fundo.className = 'atmosfera-fundo';
+      document.body.insertBefore(fundo, document.body.firstChild);
+    }
+
+    var neblina = $('.neblina', fundo);
+    if (!neblina) {
+      neblina = document.createElement('div');
+      neblina.className = 'neblina';
+      fundo.appendChild(neblina);
+    }
+
+    // Canvas de estrelas — muito apagado, econômico
+    var canvas = $('.canvas-estrelas', fundo);
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.className = 'canvas-estrelas';
+      fundo.appendChild(canvas);
+    }
+
+    var ctx = canvas.getContext('2d');
+    var estrelas = [];
+    var poeira = [];
+    var largura, altura;
+
+    // No mobile reduz a resolução do canvas e a quantidade de partículas
+    var escala = isMobile ? 0.5 : 1;
+
+    function redimensionar() {
+      largura = canvas.width = Math.max(1, Math.floor(window.innerWidth * escala));
+      altura = canvas.height = Math.max(1, Math.floor(window.innerHeight * escala));
+      estrelas = [];
+      var n = Math.min(isMobile ? 28 : 70, Math.floor(largura * altura / (isMobile ? 42000 : 26000)));
+      for (var i = 0; i < n; i++) {
+        estrelas.push({
+          x: Math.random() * largura,
+          y: Math.random() * altura,
+          r: Math.random() * 0.9 + 0.2,
+          base: Math.random() * 0.5 + 0.14,
+          fase: Math.random() * Math.PI * 2,
+          vel: 0.0006 + Math.random() * 0.0012,
+          dx: 0, dy: 0,
+          per: 30 + Math.random() * 20,
+          amp: 0.6 + Math.random() * 1.2,
+          pFase: Math.random() * Math.PI * 2
+        });
+      }
+
+      poeira = [];
+      var np = Math.min(isMobile ? 8 : 24, Math.floor(largura * altura / (isMobile ? 110000 : 90000)));
+      for (var j = 0; j < np; j++) {
+        poeira.push({
+          x: Math.random() * largura,
+          y: Math.random() * altura,
+          r: Math.random() * 1.1 + 0.3,
+          vy: (Math.random() - 0.5) * 0.06,
+          vx: (Math.random() - 0.5) * 0.045,
+          base: Math.random() * 0.22 + 0.06,
+          fase: Math.random() * Math.PI * 2,
+          vel: 0.0003 + Math.random() * 0.0008,
+          dirY: Math.random() < 0.5 ? -1 : 1,
+          px: 0, py: 0
+        });
+      }
+    }
+
+    function desenhar(agora) {
+      ctx.clearRect(0, 0, largura, altura);
+
+      for (var i = 0; i < estrelas.length; i++) {
+        var e = estrelas[i];
+        var t = agora / 1000;
+        var wob = Math.sin(t * (Math.PI * 2 / e.per) + e.pFase) * e.amp;
+        var dx = Math.sin(t * (Math.PI * 2 / e.per) * 0.7 + e.pFase) * e.amp * 0.5;
+        var a = e.base * (0.7 + 0.3 * Math.sin(agora * e.vel + e.fase));
+        ctx.beginPath();
+        ctx.arc(e.x + dx, e.y + wob, e.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(245, 236, 228,' + a.toFixed(3) + ')';
+        ctx.fill();
+      }
+
+      for (var k = 0; k < poeira.length; k++) {
+        var p = poeira[k];
+        p.y += p.vy * p.dirY;
+        p.x += p.vx;
+        if (p.y < -10) { p.y = altura + 10; p.x = Math.random() * largura; }
+        if (p.y > altura + 10) { p.y = -10; p.x = Math.random() * largura; }
+        if (p.x < -10) p.x = largura + 10;
+        if (p.x > largura + 10) p.x = -10;
+        var pa = p.base * (0.8 + 0.2 * Math.sin(agora * p.vel + p.fase));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(215, 185, 140,' + pa.toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+
+    registrarAnimador(desenhar);
+
+    window.addEventListener('resize', function () {
+      redimensionar();
+    }, { passive: true });
+
+    redimensionar();
+  }
+
+  /* ==========================================================
+     CONSTELAÇÃO — aparece discretamente após alguns segundos
+     ========================================================== */
+  function revelarConstelacao() {
+    var constel = $('.constelacao');
+    if (!constel || !podeAnimar) return;
+    setTimeout(function () {
+      constel.classList.add('visivel');
+    }, 2600);
+  }
+
+  /* ==========================================================
+     ESTRELA CADENTE — cruza lentamente ao entrar
+     ========================================================== */
+  function lancarEstrelaCadente() {
+    var estrela = $('.estrela-cadente');
+    if (!estrela) return;
+    document.body.classList.add('carregado');
+  }
+
+  /* ==========================================================
+     LUZ GLOBAL — temperatura muda ao longo de ~2 minutos
+     (vinho profundo ⇄ âmbar muito discreto)
+     ========================================================== */
+  function ativarLuzGlobal() {
+    var fundo = $('.atmosfera-fundo');
+    if (!fundo) return;
+
+    // No mobile a luz global fica estática — economia de pintura
+    if (isMobile || !podeAnimar) {
+      fundo.style.background =
+        'radial-gradient(ellipse 80% 60% at 50% 12%, rgba(182,60,70,0.14), transparent 62%),' +
+        'linear-gradient(180deg, #09050A, #180913 52%, #09050A)';
+      return;
+    }
+
+    var inicio = performance.now();
+    var ciclo = 124000; // ~2 minutos
+
+    function aplicar(agora) {
+      var t = (performance.now() - inicio) / ciclo;
+      var s = (Math.sin(t * Math.PI * 2) + 1) / 2; // 0..1
+      var r = Math.round(165 + s * 28);            // vinho → âmbar
+      var g = Math.round(55 + s * 24);
+      var b = Math.round(72 + s * 20);
+      fundo.style.background =
+        'radial-gradient(ellipse 80% 60% at 50% 12%, rgba(' + r + ',' + g + ',' + b + ',0.16), transparent 62%),' +
+        'linear-gradient(180deg, #09050A, #180913 52%, #09050A)';
+    }
+    registrarAnimador(aplicar);
+  }
+
+  /* ==========================================================
+     CHAMA ORGÂNICA — nunca balança igual duas vezes
+     ========================================================== */
+  function ativarChama() {
+    var chama = $('.vela .chama');
+    if (!chama || !podeAnimar) return;
+
+    var raiz = (Math.random() * Math.PI * 2);
+    function mover(agora) {
+      var t = agora / 1000;
+      var r1 = Math.sin(t * 1.15 + raiz) * 0.5;
+      var r2 = Math.sin(t * 0.7 + raiz * 1.7) * 0.32;
+      var r3 = Math.sin(t * 0.43 + raiz * 0.9) * 0.24;
+      var dx = r1 + r2 + r3;
+      var sway = dx * 3.2;
+      var dy = Math.sin(t * 0.9 + raiz * 2.1) * 2.1;
+      var escala = 1 + Math.sin(t * 1.3 + raiz) * 0.05 + Math.sin(t * 0.53 + raiz * 3.1) * 0.03;
+      chama.style.transform =
+        'translateX(calc(-50% + ' + sway.toFixed(2) + 'px)) translateY(' + dy.toFixed(2) + 'px) scale(' + escala.toFixed(3) + ')';
+    }
+    registrarAnimador(mover);
+  }
+
+  /* ==========================================================
+     BRILHO DA LUA — varia lentamente, nunca no mesmo ritmo
+     ========================================================== */
+  function ativarBrilhoLua() {
+    var simbolo = $('.carta-simbolo');
+    if (!simbolo || !podeAnimar) return;
+
+    var raiz = Math.random() * Math.PI * 2;
+    function mover(agora) {
+      var t = agora / 1000;
+      var a = 0.14 + 0.07 * Math.sin(t * 0.55 + raiz) + 0.035 * Math.sin(t * 0.19 + raiz * 2.3);
+      simbolo.style.textShadow = '0 0 ' + (10 + a * 34).toFixed(1) + 'px rgba(199,169,107,' + a.toFixed(3) + ')';
+    }
+    registrarAnimador(mover);
+  }
+
+  /* ==========================================================
+     PARALLAX SUTIL — cada elemento com velocidade própria
+     (responde ao mouse; movimento < 20px)
+     ========================================================== */
+  function ativarParallax() {
+    if (!podeAnimar || isTouch) return;
+    var alvo = $('.hero-ritual');
+    if (!alvo) return;
+
+    var carta = $('.carta-tarot', alvo);
+    var cristal = $('.cristal', alvo);
+    var lua = $('.lua', alvo);
+    var constel = $('.constelacao', alvo);
+
+    var mx = 0, my = 0;
+    var sx = 0, sy = 0;
+
+    document.addEventListener('mousemove', function (e) {
+      mx = (e.clientX / window.innerWidth - 0.5) * 2;
+      my = (e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    function mover() {
+      sx += (mx - sx) * 0.045;
+      sy += (my - sy) * 0.045;
+
+      if (carta) {
+        carta.style.marginLeft = (sx * -5).toFixed(2) + 'px';
+        carta.style.marginBottom = (sy * -4).toFixed(2) + 'px';
+      }
+      if (cristal) {
+        cristal.style.marginRight = (sx * -7).toFixed(2) + 'px';
+        cristal.style.marginBottom = (sy * -6).toFixed(2) + 'px';
+      }
+      if (lua) {
+        lua.style.marginRight = (sx * -3).toFixed(2) + 'px';
+        lua.style.marginTop = (sy * -3).toFixed(2) + 'px';
+      }
+      if (constel) {
+        constel.style.marginLeft = (sx * 9).toFixed(2) + 'px';
+        constel.style.marginTop = (sy * 7).toFixed(2) + 'px';
+      }
+    }
+    registrarAnimador(mover);
+  }
+
+  /* ==========================================================
+     CARTA 3D — inclinação seguindo o mouse (máx 5°)
+     ========================================================== */
+  function ativarCarta3D() {
+    var carta = $('.carta-tarot');
+    if (!carta || isTouch) return;
+
+    carta.addEventListener('mousemove', function (e) {
+      var rect = carta.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      var rotY = x * 5;
+      var rotX = -y * 5;
+      carta.style.transform =
+        'rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg) translateZ(0)';
+    });
+
+    carta.addEventListener('mouseleave', function () {
+      carta.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+      carta.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      setTimeout(function () { carta.style.transition = ''; }, 850);
+    });
+  }
+
+  /* ==========================================================
+     CURSOR CUSTOMIZADO — círculo fino → ✦ / ☾
+     ========================================================== */
+  function ativarCursor() {
+    if (isTouch) return;
+
+    // Wrapper (posicionado pelo mouse) + anel visual interno
+    var cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    cursor.innerHTML = '<span class="cursor-anel"></span>';
+    document.body.appendChild(cursor);
+
+    document.body.classList.add('cursor-customizado');
+
+    var pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    var alvo = { x: pos.x, y: pos.y };
+    var oculto = false;
+    var rafCursor;
+
+    document.addEventListener('mousemove', function (e) {
+      alvo.x = e.clientX;
+      alvo.y = e.clientY;
+      // Ao reaparecer, posiciona imediatamente para não "voar" de longe
+      if (cursor.style.opacity !== '1') {
+        pos.x = alvo.x;
+        pos.y = alvo.y;
+        cursor.style.opacity = '1';
+      }
+    });
+
+    document.addEventListener('mouseleave', function () {
+      cursor.style.opacity = '0';
+    });
+
+    function mover() {
+      if (!oculto) {
+        pos.x += (alvo.x - pos.x) * 0.18;
+        pos.y += (alvo.y - pos.y) * 0.18;
+        cursor.style.transform =
+          'translate(' + pos.x.toFixed(2) + 'px,' + pos.y.toFixed(2) + 'px)';
+      }
+      rafCursor = requestAnimationFrame(mover);
+    }
+    rafCursor = requestAnimationFrame(mover);
+
+    // Mudança de forma sobre elementos interativos
+    var seletoresLink = 'a, button, .video-placeholder, .card-servico-header, .relacionado-card, [data-toggle], [data-video], .card-servico';
+
+    document.addEventListener('mouseover', function (e) {
+      var alvoEl = e.target && e.target.closest ? e.target.closest(seletoresLink) : null;
+      if (alvoEl) {
+        cursor.classList.add('sobre');
+      }
+    });
+
+    document.addEventListener('mouseout', function (e) {
+      var saiuDeLink = e.target && e.target.closest ? e.target.closest(seletoresLink) : null;
+      var foiParaLink = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(seletoresLink) : null;
+      if (saiuDeLink && !foiParaLink) {
+        cursor.classList.remove('sobre');
+      }
+    });
+
+    // Esconde o cursor customizado sobre campos de formulário
+    // (o cursor nativo é restaurado via CSS)
+    $$('input, textarea, select').forEach(function (campo) {
+      campo.addEventListener('mouseenter', function () {
+        oculto = true;
+        cursor.style.display = 'none';
+      });
+      campo.addEventListener('mouseleave', function () {
+        oculto = false;
+        cursor.style.display = '';
+      });
+    });
+  }
 
   /* ==========================================================
      1. ANO NO RODAPÉ
@@ -55,11 +447,10 @@
   function onScrollNavbar() {
     if (navbar) {
       navbar.style.boxShadow = window.scrollY > 10
-        ? '0 6px 24px rgba(0, 0, 0, 0.55)'
+        ? '0 10px 30px rgba(0, 0, 0, 0.5)'
         : 'none';
     }
 
-    // Scrollspy: destaca a seção ativa no menu
     var pos = window.scrollY + 140;
     var atual = '';
     sections.forEach(function (sec) {
@@ -68,7 +459,9 @@
 
     navLinks.forEach(function (link) {
       var href = link.getAttribute('href');
-      link.style.color = href === '#' + atual ? 'var(--gold)' : '';
+      var ativo = href === '#' + atual;
+      link.style.color = ativo ? 'var(--gold)' : '';
+      link.classList.toggle('ativo', ativo);
     });
   }
 
@@ -103,26 +496,20 @@
       var aberto = document.body.classList.toggle('menu-aberto');
       menuBtn.setAttribute('aria-expanded', String(aberto));
     });
-    // Fecha o menu ao clicar em qualquer link da navegação
     $$('.navbar nav a').forEach(function (l) { l.addEventListener('click', fecharMenu); });
   }
 
   /* ==========================================================
-     5. SCROLL REVEAL — animações de entrada
+     5. SCROLL REVEAL — animações de entrada com blur
      ========================================================== */
-  var podeAnimar = window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches === false;
-
   function prepararReveal() {
-    // Grupos de cartões recebem atraso escalonado (efeito cascata)
-    $$('.social-grid, .video-grid, .cards-grid, .payment-grid').forEach(function (grid) {
+    $$('.social-grid, .video-grid, .cards-grid, .payment-grid, .depoimentos-grid').forEach(function (grid) {
       $$(':scope > *', grid).forEach(function (el, i) {
         el.classList.add('reveal');
-        el.style.transitionDelay = (i * 90) + 'ms';
+        el.style.transitionDelay = (i * 120) + 'ms';
       });
     });
-    // Títulos de seção também entram com suavidade
-    $$('.sobre h2, .servicos h2, .agendamento h2, .cadastro h2, #pagamento h2, .secao-intro')
+    $$('.sobre h2, .servicos h2, .agendamento h2, .cadastro h2, #pagamento h2, .secao-intro, .hero-text')
       .forEach(function (el) { el.classList.add('reveal'); });
   }
 
@@ -139,7 +526,6 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
     $$('.reveal').forEach(function (el) {
-      // Se já está visível na carga, mostra imediatamente (evita flash)
       var rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
         el.classList.add('reveal-visivel');
@@ -164,7 +550,7 @@
     function passo(agora) {
       if (!inicio) inicio = agora;
       var p = Math.min((agora - inicio) / duracao, 1);
-      var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      var eased = 1 - Math.pow(1 - p, 3);
       el.textContent = Math.round(alvo * eased).toLocaleString('pt-BR') + sufixo;
       if (p < 1) requestAnimationFrame(passo);
     }
@@ -195,20 +581,18 @@
     var sub = $('.sub-servicos', card);
     if (!sub) return;
     sub.style.maxHeight = card.classList.contains('aberto')
-      ? sub.scrollHeight + 'px'
+      ? (isMobile ? 'none' : sub.scrollHeight + 'px')
       : '0px';
   }
 
   function toggleServico(card) {
     var jaAberto = card.classList.contains('aberto');
 
-    // Fecha todos
     $$('.card-servico.aberto').forEach(function (c) {
       c.classList.remove('aberto');
       ajustarAltura(c);
     });
 
-    // Abre o clicado (se não estava aberto)
     if (!jaAberto) {
       card.classList.add('aberto');
       ajustarAltura(card);
@@ -221,14 +605,12 @@
     });
   });
 
-  // Tarot (destaque) aberto por padrão
   var destaque = $('.card-servico.destaque');
   if (destaque) {
     destaque.classList.add('aberto');
     ajustarAltura(destaque);
   }
 
-  // Recalcula alturas no resize
   var resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
@@ -246,7 +628,6 @@
   var msgAgenda = $('#msg-agenda');
   var horarioSelecionado = null;
 
-  // Impede selecionar datas passadas
   if (inputData) {
     var hoje = new Date();
     var ajuste = hoje.getTimezoneOffset();
@@ -314,7 +695,6 @@
     });
   }
 
-  // Máscara simples de telefone (opcional, não precisa estar completo)
   var inputTel = $('#telefone');
   if (inputTel) {
     inputTel.addEventListener('input', function () {
@@ -349,39 +729,33 @@
 
   var modalEmbed = $('#modal-video-embed');
 
-  // Converte link do YouTube / Instagram em iframe de embed
   function montarEmbed(url) {
     if (!url) return '<p class="modal-video-error">Nenhum vídeo vinculado ainda.</p>';
     var u = url.trim();
 
-    // YouTube — vídeo (watch, shorts, youtu.be, embed)
     var ytVid = u.match(/(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})/);
     if (ytVid) {
       return '<iframe src="https://www.youtube.com/embed/' + ytVid[1] +
         '" title="YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
     }
 
-    // YouTube — canal (@nome) → abre o canal em nova aba
     if (u.indexOf('youtube.com/@') !== -1 || u.indexOf('youtube.com/channel/') !== -1) {
       window.open(u, '_blank', 'noopener');
       return null;
     }
 
-    // Instagram — Reel
     var igReel = u.match(/instagram\.com\/reel\/([\w-]+)/);
     if (igReel) {
       return '<iframe src="https://www.instagram.com/reel/' + igReel[1] +
         '/embed" title="Instagram" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>';
     }
 
-    // Instagram — Post
     var igPost = u.match(/instagram\.com\/p\/([\w-]+)/);
     if (igPost) {
       return '<iframe src="https://www.instagram.com/p/' + igPost[1] +
         '/embed" title="Instagram" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>';
     }
 
-    // Instagram — perfil → abre o perfil em nova aba
     if (u.indexOf('instagram.com/') !== -1) {
       window.open(u, '_blank', 'noopener');
       return null;
@@ -392,12 +766,13 @@
 
   function abrirVideo(url) {
     var embed = montarEmbed(url);
-    if (embed === null) return; // já abriu em nova aba
+    if (embed === null) return;
     if (embed) {
       modalEmbed.innerHTML = embed;
       modal.classList.add('aberto');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('modal-aberto');
     }
   }
 
@@ -406,14 +781,13 @@
     modal.setAttribute('aria-hidden', 'true');
     modalEmbed.innerHTML = '';
     document.body.style.overflow = '';
+    document.body.classList.remove('modal-aberto');
   }
 
-  // Vincula os cards de vídeo (data-video)
   $$('[data-video]').forEach(function (el) {
     el.addEventListener('click', function () {
       abrirVideo(el.getAttribute('data-video'));
     });
-    // Acessibilidade: Enter / Espaço ativam o card
     el.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -422,7 +796,6 @@
     });
   });
 
-  // Fechar: botão ×, clique fora e tecla ESC
   var btnFecharModal = $('.modal-video-close', modal);
   if (btnFecharModal) btnFecharModal.addEventListener('click', fecharVideo);
 
@@ -456,6 +829,19 @@
   btnTopo.addEventListener('click', function () {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  /* ==========================================================
+     INICIALIZAÇÃO DA ATMOSFERA
+     ========================================================== */
+  criarAtmosfera();
+  revelarConstelacao();
+  lancarEstrelaCadente();
+  ativarCarta3D();
+  ativarCursor();
+  ativarChama();
+  ativarBrilhoLua();
+  ativarLuzGlobal();
+  ativarParallax();
 
 })();
 

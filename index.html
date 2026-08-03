@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bruxinha • Tarot, Magia & Terapias Holísticas</title>
+<meta name="description" content="Bruxinha — Tarot, magia e terapias holísticas. Leituras, limpeza energética, rituais de cura e cursos conduzidos com escuta, cuidado e tradição.">
+<title>Bruxinha • Tarot, Magia &amp; Terapias Holísticas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="navbar">
   <div class="container">
-    <div class="logo">✦ Bruxinha</div>
+    <a class="logo" href="index.html"><span class="sigla">✦</span> Bruxinha</a>
     <nav>
       <a href="#sobre">Comunidade</a>
       <a href="#servicos">Serviços</a>
@@ -23,31 +25,103 @@
   </div>
 </header>
 
-<!-- HERO / APRESENTAÇÃO -->
+<!-- HERO — COMPOSIÇÃO RITUALÍSTICA -->
 <section class="hero">
   <div class="container hero-content">
+    <!-- Mesa ritualística minimalista -->
+    <div class="hero-ritual" aria-hidden="true">
+
+      <!-- Constelação — parte do céu, não um mapa -->
+      <svg class="constelacao" viewBox="0 0 400 480" width="100%" height="100%">
+        <g class="linhas">
+          <line x1="52" y1="118" x2="118" y2="186"/>
+          <line x1="118" y1="186" x2="112" y2="276"/>
+          <line x1="240" y1="92" x2="316" y2="66"/>
+          <line x1="316" y1="66" x2="352" y2="124"/>
+        </g>
+        <g class="pontos">
+          <circle cx="52" cy="118" r="1.5"/>
+          <circle cx="118" cy="186" r="2.1"/>
+          <circle cx="112" cy="276" r="1.3"/>
+          <circle cx="196" cy="172" r="1.0"/>
+          <circle cx="240" cy="92" r="1.9"/>
+          <circle cx="316" cy="66" r="2.4"/>
+          <circle cx="352" cy="124" r="1.2"/>
+          <circle cx="88" cy="330" r="1.1"/>
+          <circle cx="300" cy="264" r="1.6"/>
+          <circle cx="158" cy="52" r="0.9"/>
+          <circle cx="348" cy="300" r="1.0"/>
+          <circle cx="42" cy="212" r="0.8"/>
+        </g>
+      </svg>
+
+      <!-- Luz quente irradiando da vela sobre a mesa -->
+      <div class="luz-vela"></div>
+
+      <!-- Estrela que cruza lentamente ao entrar -->
+      <span class="estrela-cadente"></span>
+
+      <!-- Lua crescente -->
+      <svg class="lua" viewBox="0 0 120 120">
+        <path d="M84 18 a42 42 0 1 0 0 84 a34 34 0 1 1 0 -84" fill="url(#lua-grad)"/>
+        <defs>
+          <linearGradient id="lua-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f5ece4"/>
+            <stop offset="55%" stop-color="#e6d7c6"/>
+            <stop offset="100%" stop-color="#c7a96b"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <!-- Carta de tarot — A Sacerdotisa -->
+      <div class="carta-tarot">
+        <div class="carta-respiro">
+          <div class="carta-frente">
+            <span class="carta-simbolo">☾</span>
+            <span class="carta-nome">A Sacerdotisa</span>
+            <span class="carta-rodape">BRUXINHA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cristal -->
+      <svg class="cristal" viewBox="0 0 92 130">
+        <polygon points="46,8 72,52 56,116 36,116 20,52" fill="url(#cristal-grad)" stroke="rgba(199,169,107,0.4)" stroke-width="0.6"/>
+        <polygon points="46,8 72,52 46,60" fill="rgba(245,236,228,0.18)"/>
+        <polygon points="20,52 46,60 36,116" fill="rgba(165,63,72,0.10)"/>
+        <polygon points="72,52 46,60 56,116" fill="rgba(199,169,107,0.08)"/>
+        <line x1="46" y1="8" x2="46" y2="116" stroke="rgba(245,236,228,0.14)"/>
+        <line x1="34" y1="34" x2="60" y2="96" stroke="rgba(245,236,228,0.08)"/>
+        <defs>
+          <linearGradient id="cristal-grad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(245,236,228,0.32)"/>
+            <stop offset="55%" stop-color="rgba(198,101,90,0.2)"/>
+            <stop offset="100%" stop-color="rgba(165,63,72,0.28)"/>
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <!-- Vela -->
+      <div class="vela">
+        <span class="chama"></span>
+        <span class="corpo"></span>
+      </div>
+
+    </div>
     <div class="hero-text">
       <span class="badge">Tarot • Magia • Cura</span>
-      <h1>Um caminho de clareza para sua jornada</h1>
-      <p style="color: var(--text-muted); max-width: 480px; margin-bottom: 1.5rem;">
+      <h1>Um caminho de <span class="ouro">clareza</span> para sua jornada</h1>
+      <p>
         Leituras de tarot, limpeza energética, terapias holísticas e rituais de cura conduzidos com escuta,
         cuidado e tradição. Cada consulta é um espaço seguro para transformação.
       </p>
-      <a href="#agendamento" class="btn-primary">Agendar consulta</a>
-      <a href="#servicos" class="btn-secondary" style="margin-left: 0.8rem;">Ver serviços</a>
+      <div class="hero-cta">
+        <a href="#agendamento" class="btn-primary">Agendar consulta</a>
+        <a href="#servicos" class="btn-secondary">Ver serviços</a>
+      </div>
     </div>
-    <div class="hero-image">
-      <svg viewBox="0 0 300 300" width="100%" style="max-width:320px; border-radius:12px; border:2px solid var(--primary); box-shadow:0 10px 25px rgba(0,0,0,0.5); background: radial-gradient(circle at 50% 35%, #2b091e, #120913 70%);">
-        <circle cx="150" cy="110" r="55" fill="none" stroke="#ee4540" stroke-width="1.5" opacity="0.7"/>
-        <circle cx="150" cy="110" r="38" fill="#ee4540" opacity="0.15"/>
-        <path d="M172 90 a38 38 0 1 0 0 40 a30 30 0 1 1 0 -40" fill="#fbeee0" opacity="0.9"/>
-        <g stroke="#c72c41" stroke-width="1" opacity="0.6">
-          <line x1="150" y1="185" x2="150" y2="260"/>
-          <line x1="110" y1="230" x2="190" y2="230"/>
-        </g>
-        <text x="150" y="250" text-anchor="middle" font-family="Cinzel, serif" font-size="14" fill="#a392a0" letter-spacing="3">BRUXINHA</text>
-      </svg>
-    </div>
+
+    
   </div>
 </section>
 
@@ -55,7 +129,7 @@
   <span class="nova"></span><span class="crescente"></span><span class="cheia"></span><span class="minguante"></span><span class="nova"></span>
 </div>
 
-<!-- SOBRE / PRESENÇA DIGITAL -->
+<!-- SOBRE / COMUNIDADE -->
 <section class="sobre container" id="sobre">
   <h2>Presença &amp; Comunidade</h2>
   <p class="secao-intro">Conteúdo semanal sobre tarot, magia e autoconhecimento nas redes — em breve com vídeos de apresentação e loja própria.</p>
@@ -81,16 +155,35 @@
 
   <div class="video-grid">
     <div class="video-placeholder" data-video="https://youtu.be/aSD73FfRUK4?si=kQfmpgW71lmRr3pR" role="button" tabindex="0" aria-label="Abrir vídeo de apresentação do canal">
-      <div class="play">▶</div>
+      <div class="play">☾</div>
       Vídeo de apresentação do canal
     </div>
     <div class="video-placeholder" data-video="https://www.instagram.com/bruxinhateresaferrini?igsh=dTQxaHF5ZGYxZDV3" role="button" tabindex="0" aria-label="Abrir perfil do Instagram">
-      <div class="play">▶</div>
+      <div class="play">✦</div>
       Vídeo curto · Instagram <span class="status-em-breve">reels</span>
     </div>
     <div class="video-placeholder" data-video="https://youtube.com/@bruxinhateresaferrini?si=0c1Y6rR1ePp9T1QN" role="button" tabindex="0" aria-label="Abrir canal do YouTube">
-      <div class="play">▶</div>
+      <div class="play">☾</div>
       Canal do YouTube <span class="status-em-breve">inscreva-se</span>
+    </div>
+  </div>
+
+  <!-- Depoimentos — um círculo de pessoas -->
+  <div class="depoimentos-grid">
+    <div class="depoimento">
+      <span class="aspas">“</span>
+      <blockquote>A leitura me trouxe uma clareza que eu procurava há meses. Saí leve, com direção e muito acolhimento.</blockquote>
+      <span class="autor">M. · Leitura completa</span>
+    </div>
+    <div class="depoimento">
+      <span class="aspas">“</span>
+      <blockquote>A Roda de Cura foi um marco na minha vida. Me senti ouvida, segura e, pela primeira vez, em paz com a minha história.</blockquote>
+      <span class="autor">A. · Roda de Cura</span>
+    </div>
+    <div class="depoimento">
+      <span class="aspas">“</span>
+      <blockquote>O divórcio energético me devolveu a sensação de pertencer a mim mesma. Não consigo explicar em palavras.</blockquote>
+      <span class="autor">C. · Divórcio Energético</span>
     </div>
   </div>
 </section>
@@ -109,7 +202,7 @@
     <!-- TAROT -->
     <div class="card-servico destaque">
       <button class="card-servico-header" data-toggle>
-        Tarot
+        ☾ Tarot
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -136,7 +229,7 @@
     <!-- DIVÓRCIO ENERGÉTICO -->
     <div class="card-servico">
       <button class="card-servico-header" data-toggle>
-        Divórcio Energético
+        ✧ Divórcio Energético
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -151,7 +244,7 @@
     <!-- MAGIA -->
     <div class="card-servico">
       <button class="card-servico-header" data-toggle>
-        Magia
+        ✦ Magia
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -167,7 +260,7 @@
     <!-- TERAPIAS HOLÍSTICAS -->
     <div class="card-servico">
       <button class="card-servico-header" data-toggle>
-        Terapias Holísticas
+        ✿ Terapias Holísticas
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -183,7 +276,7 @@
     <!-- RODA DE CURA — MULHERES -->
     <div class="card-servico">
       <button class="card-servico-header" data-toggle>
-        Roda de Cura — Mulheres
+        ☾ Roda de Cura — Mulheres
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -199,7 +292,7 @@
     <!-- CURSOS -->
     <div class="card-servico">
       <button class="card-servico-header" data-toggle>
-        Cursos
+        ✧ Cursos
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -218,7 +311,7 @@
     <!-- PALESTRAS E EVENTOS -->
     <div class="card-servico">
       <button class="card-servico-header" data-toggle>
-        Palestras &amp; Eventos Corporativos
+        ✦ Palestras &amp; Eventos Corporativos
         <span class="chevron">▾</span>
       </button>
       <div class="sub-servicos">
@@ -242,11 +335,11 @@
   <h2>Agendamento</h2>
   <div class="agenda-wrapper">
     <div>
-      <label for="data-consulta" style="display:block; margin-bottom:0.6rem; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Escolha a data</label>
+      <label for="data-consulta" style="display:block; margin-bottom:0.6rem; font-size:0.72rem; color:rgba(245,236,228,0.55); text-transform:uppercase; letter-spacing:0.18em;">Escolha a data</label>
       <input type="date" id="data-consulta" class="input-date">
     </div>
     <div>
-      <label style="display:block; margin-bottom:0.6rem; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Escolha o horário</label>
+      <label style="display:block; margin-bottom:0.6rem; font-size:0.72rem; color:rgba(245,236,228,0.55); text-transform:uppercase; letter-spacing:0.18em;">Escolha o horário</label>
       <div class="horarios-grid" id="horarios">
         <button type="button" class="btn-horario">09:00</button>
         <button type="button" class="btn-horario">11:00</button>
@@ -258,12 +351,12 @@
     </div>
   </div>
   <button type="button" class="btn-confirmar" id="btn-confirmar-agenda">Confirmar agendamento</button>
-  <p id="msg-agenda" style="margin-top:1rem; color: var(--gold); font-size:0.9rem; min-height: 1.2em;"></p>
+  <p id="msg-agenda" style="margin-top:1.2rem; color:var(--gold); font-size:0.9rem; min-height:1.2em;"></p>
 </section>
 
 <!-- CADASTRO -->
 <section class="cadastro container" id="cadastro">
-  <h2 style="text-align:center; margin-bottom:2rem; font-size:2rem; color:var(--gold);">Cadastro Rápido</h2>
+  <h2 style="text-align:center; margin-bottom:1.2rem; font-size:clamp(1.6rem,3vw,2.2rem);">Cadastro Rápido</h2>
   <p class="secao-intro">Só o essencial para entrarmos em contato sobre sua consulta.</p>
   <form class="form-cadastro" id="form-cadastro">
     <div class="form-group">
@@ -279,7 +372,7 @@
       <input type="tel" id="telefone" name="telefone" placeholder="(  ) _____-____">
     </div>
     <button type="submit" class="btn-primary">Enviar cadastro</button>
-    <p id="msg-cadastro" style="color: var(--gold); font-size:0.9rem; min-height: 1.2em;"></p>
+    <p id="msg-cadastro" style="color:var(--gold); font-size:0.9rem; min-height:1.2em;"></p>
   </form>
 </section>
 
@@ -289,10 +382,10 @@
 
 <!-- PAGAMENTO -->
 <section class="container" id="pagamento">
-  <h2 style="text-align:center; margin-bottom:2rem; font-size:2rem; color:var(--gold);">Formas de Pagamento</h2>
+  <h2 style="text-align:center; margin-bottom:1.4rem; font-size:clamp(1.6rem,3vw,2.2rem);">Formas de Pagamento</h2>
   <div class="payment-grid">
     <div class="payment-card">
-      <span class="icone">💳</span>
+      <span class="icone">✦</span>
       <span class="metodo">Débito</span>
     </div>
     <div class="payment-card">
@@ -300,7 +393,7 @@
       <span class="metodo">Pix</span>
     </div>
     <div class="payment-card">
-      <span class="icone">💳</span>
+      <span class="icone">✦</span>
       <span class="metodo">Crédito</span>
     </div>
   </div>
@@ -327,3 +420,4 @@
 
 </body>
 </html>
+
