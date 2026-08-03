@@ -1,5 +1,5 @@
 /* ============================================================
-   BRUXINHA — Identidade Sagrada
+   BRUXINHA — Identidade
    ------------------------------------------------------------
    Preto profundo, vinho, bordô, vermelho queimado, terracota,
    marfim e dourado envelhecido como joia.
@@ -55,7 +55,8 @@ body {
 ::-webkit-scrollbar-thumb { background: rgba(199, 169, 107, 0.22); border-radius: 8px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(199, 169, 107, 0.4); }
 
-section[id] { scroll-margin-top: 4.6rem; }
+section[id],
+main[id] { scroll-margin-top: 4.6rem; }
 
 h1, h2, h3 {
   font-family: var(--font-heading);
@@ -98,7 +99,7 @@ h1, h2, h3 {
   height: 100%;
 }
 
-/* Névoa muito discreta, movendo-se lentamente */
+/* Névoa (muito discreta, movendo-se lentamente) */
 .neblina {
   position: absolute;
   inset: -25%;
@@ -136,7 +137,7 @@ h1, h2, h3 {
   to   { transform: translate(5%, 3%) scale(1.12); }
 }
 
-/* Granulado — remove o excesso "digital" */
+/* Granulado */
 .granulado {
   position: fixed;
   inset: 0;
@@ -252,6 +253,30 @@ h2 {
 
 .navbar nav a:hover::after,
 .navbar nav a.ativo::after { transform: scaleX(1); }
+
+/* ============================================================
+   SKIP LINK — acessibilidade (usuários de teclado)
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 500;
+  background: var(--gold);
+  color: #1c0e12;
+  padding: 0.7rem 1.3rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.35s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  color: #1c0e12;
+}
 
 /* ============================================================
    BOTÕES — objetos físicos
@@ -499,12 +524,6 @@ h2 {
   position: absolute;
   inset: 0;
   border-radius: 10px 9px 11px 9px;
-  padding: 1.5rem 1.3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
   transform: translateZ(26px);
   background:
     radial-gradient(circle at 30% 18%, rgba(245, 236, 228, 0.08), transparent 58%),
@@ -514,6 +533,17 @@ h2 {
     inset 0 0 0 1px rgba(199, 169, 107, 0.08),
     inset 0 0 70px rgba(9, 5, 10, 0.65),
     0 34px 64px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+/* Carta ilustrada — imagem ocupa toda a superfície da carta */
+.carta-frente .carta-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* textura de papel fino + imperfeições das bordas */
@@ -891,6 +921,9 @@ body.carregado .estrela-cadente {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
+
+/* Lista de serviços em coluna única (accordion) */
+#lista-servicos { grid-template-columns: 1fr; }
 
 .card-servico {
   position: relative;

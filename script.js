@@ -711,6 +711,38 @@
   }
 
   /* ==========================================================
+     9b. FORMULÁRIO DE CONTATO — validação
+     ========================================================== */
+  var formContato = $('#form-contato');
+
+  if (formContato) {
+    formContato.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msg = $('#msg-contato');
+      var nome = $('#contato-nome').value.trim();
+      var email = $('#contato-email').value.trim();
+      var mensagem = $('#contato-mensagem').value.trim();
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!nome || !emailRegex.test(email) || !mensagem) {
+        msg.textContent = '✦ Preencha nome, e-mail válido e mensagem para enviar.';
+        return;
+      }
+      msg.textContent = '☾ Mensagem enviada! Retornarei o mais breve possível. ✦';
+      formContato.reset();
+    });
+  }
+
+  /* ==========================================================
+     9c. DATA DE ATUALIZAÇÃO — páginas legais
+     ========================================================== */
+  $$('.data-atualizacao').forEach(function (el) {
+    el.textContent = new Date().toLocaleDateString('pt-BR', {
+      day: '2-digit', month: '2-digit', year: 'numeric'
+    });
+  });
+
+  /* ==========================================================
      10. MODAL DE VÍDEO — YouTube & Instagram
      ========================================================== */
   var modal = $('#modal-video');

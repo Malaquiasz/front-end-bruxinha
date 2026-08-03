@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Bruxinha — Tarot, magia e terapias holísticas. Leituras, limpeza energética, rituais de cura e cursos conduzidos com escuta, cuidado e tradição.">
 <title>Bruxinha • Tarot, Magia &amp; Terapias Holísticas</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' fill='%23C7A96B'>✦</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="navbar">
   <div class="container">
@@ -26,7 +28,7 @@
 </header>
 
 <!-- HERO — COMPOSIÇÃO RITUALÍSTICA -->
-<section class="hero">
+<section class="hero" id="conteudo">
   <div class="container hero-content">
     <!-- Mesa ritualística minimalista -->
     <div class="hero-ritual" aria-hidden="true">
@@ -73,13 +75,14 @@
         </defs>
       </svg>
 
-      <!-- Carta de tarot — A Sacerdotisa -->
+<!-- Carta de tarot — A Sacerdotisa -->
       <div class="carta-tarot">
         <div class="carta-respiro">
           <div class="carta-frente">
-            <span class="carta-simbolo">☾</span>
-            <span class="carta-nome">A Sacerdotisa</span>
-            <span class="carta-rodape">BRUXINHA</span>
+            <picture>
+              <source srcset="images/cartahome.webp" type="image/webp">
+              <img src="images/cartahome-sm.png" alt="A Sacerdotisa — Tarot" class="carta-img">
+            </picture>
           </div>
         </div>
       </div>
@@ -109,7 +112,7 @@
 
     </div>
     <div class="hero-text">
-      <span class="badge">Tarot • Magia • Cura</span>
+      <span class="badge">Tarot ✦ Magia ✦ Cura</span>
       <h1>Um caminho de <span class="ouro">clareza</span> para sua jornada</h1>
       <p>
         Leituras de tarot, limpeza energética, terapias holísticas e rituais de cura conduzidos com escuta,
@@ -197,7 +200,7 @@
   <h2>Serviços</h2>
   <p class="secao-intro">Toque em cada área para ver os atendimentos, durações e valores.</p>
 
-  <div class="cards-grid" id="lista-servicos" style="grid-template-columns: 1fr;">
+  <div class="cards-grid" id="lista-servicos">
 
     <!-- TAROT -->
     <div class="card-servico destaque">

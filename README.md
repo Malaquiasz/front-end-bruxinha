@@ -35,8 +35,8 @@ O objetivo não é parecer um site genérico de tarot, espiritualidade ou esoter
 - **Parallax multicamadas:** carta, cristal, lua e constelação respondem ao mouse com velocidades próprias (movimento < 20px).
 
 ### Interações
-- **Hero ritualístico:** composição de lua crescente, carta de tarot (A Sacerdotisa), cristal, vela e constelação — sem imagens externas, tudo em SVG/CSS puro.
-- **Carta 3D:** inclinação seguindo o mouse, máx. 5°, com respiração sutil (100% → 100.4% → 100% em ~18s), textura de papel fino e sombras profundas.
+- **Hero ritualístico:** composição de lua crescente, carta de tarot (A Sacerdotisa), cristal, vela e constelação — cenário em SVG/CSS puro + imagem da carta.
+- **Carta 3D:** inclinação seguindo o mouse, máx. 5°, com respiração sutil (100% → 100.4% → 100% em ~18s), imagem da carta real em WebP + fallback PNG, textura de papel fino e sombras profundas.
 - **Luz da vela:** luz quente difusa irradiando da chama, atingindo carta, cristal e fundo; o cristal reage com reflexos internos.
 - **Cursor customizado:** círculo fino dourado que se transforma lentamente em uma estrela de quatro pontas sobre elementos interativos (apenas dispositivos com hover).
 - **Estrela cadente** cruza lentamente o fundo ao entrar no site; a constelação aparece discretamente após alguns segundos.
@@ -63,12 +63,13 @@ O objetivo não é parecer um site genérico de tarot, espiritualidade ou esoter
 ├── termos.html             → Termos de Uso
 ├── style.css               → Design system + atmosfera (CSS/SVG)
 ├── script.js               → Interações e camada de atmosfera (Canvas)
+├── images/                 → Imagens otimizadas (cartahome.webp + fallback .png)
 └── README.md
 ```
 
 ## Funcionalidades
 - Navegação suave + scrollspy na navbar
-- Menu mobile (hambúrguer)
+- Menu mobile
 - Scroll reveal com blur
 - Contadores animados das redes sociais
 - Accordion de serviços (um aberto por vez)
