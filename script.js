@@ -203,7 +203,7 @@
      A cena não "aparece" — ela se revela, como se uma vela
      estivesse sendo acesa num cômodo escuro. A ordem segue a
      lógica da luz, não a ordem do HTML: primeiro a luz ambiente,
-     depois os objetos que refletem luz (lua, cristal), depois o
+     depois os objetos que refletem luz (lua), depois o
      objeto de maior significado (a carta), e só por último o
      texto — como se as palavras só pudessem ser lidas depois que
      os olhos se acostumam ao ambiente.
@@ -227,7 +227,6 @@
 
     var elementos = [
       { el: $('.lua', ritual),                 atraso: 650,  duracao: 1800, deslocY: -10 },
-      { el: $('.cristal', ritual),              atraso: 950,  duracao: 1700, deslocY: 10 },
       { el: $('.carta-tarot', ritual),          atraso: 1200, duracao: 1900, deslocY: 16 },
       { el: $('.hero-text .badge'),             atraso: 1550, duracao: 1100, deslocY: 8  },
       { el: $('.hero-text h1'),                 atraso: 1750, duracao: 1400, deslocY: 12 },
@@ -430,7 +429,6 @@
     if (!alvo) return;
 
     var carta = $('.carta-tarot', alvo);
-    var cristal = $('.cristal', alvo);
     var lua = $('.lua', alvo);
     var constel = $('.constelacao', alvo);
 
@@ -449,10 +447,6 @@
       if (carta) {
         carta.style.marginLeft = (sx * -5).toFixed(2) + 'px';
         carta.style.marginBottom = (sy * -4).toFixed(2) + 'px';
-      }
-      if (cristal) {
-        cristal.style.marginRight = (sx * -7).toFixed(2) + 'px';
-        cristal.style.marginBottom = (sy * -6).toFixed(2) + 'px';
       }
       if (lua) {
         lua.style.marginRight = (sx * -3).toFixed(2) + 'px';

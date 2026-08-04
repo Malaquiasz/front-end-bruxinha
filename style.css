@@ -776,56 +776,8 @@ h2 {
   letter-spacing: 0.3em;
 }
 
-/* Cristal — respira lentamente */
-.cristal {
-  position: absolute;
-  right: 12%;
-  bottom: 4%;
-  width: 92px;
-  height: 148px;
-  z-index: 2;
-  filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.55));
-  animation: respirar 13s ease-in-out infinite;
-}
-
-.cristal-sombra {
-  fill: rgba(0, 0, 0, 0.4);
-  filter: blur(2px);
-}
-
-/* núcleo — o cristal parece aceso por dentro, não só refletindo luz */
-.cristal-nucleo {
-  fill: rgba(245, 236, 228, 0.4);
-  filter: blur(7px);
-  mix-blend-mode: screen;
-  animation: nucleo-cristal 6.5s ease-in-out infinite;
-}
-
-@keyframes nucleo-cristal {
-  0%, 100% { opacity: 0.35; }
-  50%      { opacity: 0.75; }
-}
-
-.cristal-garras { opacity: 0.85; }
-
-/* reação à luz da vela — reflexos internos conforme a chama oscila */
-.cristal::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, transparent 30%, rgba(199, 169, 107, 0.14) 48%, transparent 62%);
-  mix-blend-mode: screen;
-  animation: luz-cristal 9s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes luz-cristal {
-  0%, 100% { opacity: 0.5; transform: translateX(-2px); }
-  50%      { opacity: 1;    transform: translateX(2px); }
-}
-
 /* Luz ambiente quente — sem objeto visível como fonte; só o
-   calor que continua banhando a carta e o cristal, como se
+   calor que continua banhando a carta, como se
    viesse de algo fora de quadro. */
 .luz-ambiente {
   position: absolute;
@@ -2524,7 +2476,6 @@ button, a { touch-action: manipulation; }
   .hero-ritual { height: 440px; }
   .carta-tarot { width: 140px; height: 214px; }
   .lua { width: 88px; height: 88px; }
-  .cristal { width: 74px; height: 119px; }
   .navbar nav { gap: 1rem; justify-content: center; width: 100%; }
 }
 
