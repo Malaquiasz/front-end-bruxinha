@@ -198,6 +198,182 @@
   }
 
   /* ==========================================================
+     ABERTURA CINEMATOGRÁFICA DO HERO
+     ------------------------------------------------------------
+     A cena não "aparece" — ela se revela, como se uma vela
+     estivesse sendo acesa num cômodo escuro. A ordem segue a
+     lógica da luz, não a ordem do HTML: primeiro a chama (fonte),
+     depois os objetos que refletem luz (lua, cristal), depois o
+     objeto de maior significado (a carta), e só por último o
+     texto — como se as palavras só pudessem ser lidas depois que
+     os olhos se acostumam ao ambiente.
+
+     Todo o estado inicial é aplicado via JS (não via CSS default).
+     Isso é proposital: se o JS falhar ou demorar, os elementos
+     nunca ficam presos em opacidade zero — o CSS não sabe que
+     essa animação existe. Falha segura por padrão.
+     ========================================================== */
+  function abrirCena() {
+    var ritual = $('.hero-ritual');
+    if (!ritual) return; // só existe na home
+
+    // Sem preferência por movimento: mostra tudo, sem véu, sem espera.
+    if (!podeAnimar) return;
+
+    var limiar = document.createElement('div');
+    limiar.className = 'limiar';
+    limiar.setAttribute('aria-hidden', 'true');
+    document.body.insertBefore(limiar, document.body.firstChild);
+
+    var elementos = [
+      { el: $('.vela', ritual),                atraso: 150,  duracao: 1300, deslocY: 6  },
+      { el: $('.lua', ritual),                 atraso: 650,  duracao: 1800, deslocY: -10 },
+      { el: $('.cristal', ritual),              atraso: 950,  duracao: 1700, deslocY: 10 },
+      { el: $('.carta-tarot', ritual),          atraso: 1200, duracao: 1900, deslocY: 16 },
+      { el: $('.hero-text .badge'),             atraso: 1550, duracao: 1100, deslocY: 8  },
+      { el: $('.hero-text h1'),                 atraso: 1750, duracao: 1400, deslocY: 12 },
+      { el: $('.hero-text p'),                  atraso: 2050, duracao: 1300, deslocY: 10 },
+      { el: $('.hero-text .hero-cta'),          atraso: 2280, duracao: 1200, deslocY: 8  }
+    ];
+
+    elementos.forEach(function (item) {
+      if (!item.el) return;
+      item.el.style.opacity = '0';
+      item.el.style.filter = 'blur(8px)';
+      item.el.style.transform = 'translateY(' + item.deslocY + 'px)';
+    });
+
+    elementos.forEach(function (item) {
+      if (!item.el) return;
+      setTimeout(function () {
+        item.el.style.transition =
+          'opacity ' + item.duracao + 'ms var(--ease-slow), ' +
+          'transform ' + item.duracao + 'ms var(--ease-slow), ' +
+          'filter ' + item.duracao + 'ms var(--ease-slow)';
+        item.el.style.opacity = '';
+        item.el.style.filter = '';
+        item.el.style.transform = '';
+      }, item.atraso);
+    });
+
+    // O véu se dissolve enquanto a chama acende — a "porta" se abre
+    // no mesmo instante em que a luz nasce, não antes nem depois.
+    setTimeout(function () {
+      limiar.classList.add('dissolvido');
+      setTimeout(function () { limiar.remove(); }, 1750);
+    }, 180);
+
+    setTimeout(function () {
+      document.body.classList.add('cena-acesa');
+    }, 2600);
+  }
+
+  /* ==========================================================
+     LUZ POR CAPÍTULO — cada seção é uma cena com luz própria
+     ------------------------------------------------------------
+     Em vez de uma atmosfera única do início ao fim, a temperatura
+     e a posição da luz ambiente mudam conforme o usuário entra em
+     cada seção — sutil, lento (2.8s de transição), nunca abrupto.
+     Comunidade recebe um calor mais humano (bordô); Serviços, um
+     dourado contido; Agendamento, mais luz (é o convite); o
+     encerramento esfria de volta ao silêncio do início.
+     ========================================================== */
+  function ativarLuzPorCapitulo() {
+    if (!podeAnimar || isMobile || !('IntersectionObserver' in window)) return;
+
+    var fundo = $('.atmosfera-fundo');
+    if (!fundo) return;
+
+    var luzCap = $('.luz-capitulo', fundo);
+    if (!luzCap) {
+      luzCap = document.createElement('div');
+      luzCap.className = 'luz-capitulo';
+      fundo.appendChild(luzCap);
+    }
+
+    var capitulos = [
+      { id: 'sobre',       cor: 'rgba(165, 63, 72, 0.11)' },  // comunidade — calor humano
+      { id: 'servicos',    cor: 'rgba(199, 169, 107, 0.07)' }, // rituais — ouro contido
+      { id: 'agendamento', cor: 'rgba(199, 169, 107, 0.15)' }, // o convite — mais luz
+      { id: 'cadastro',    cor: 'rgba(198, 101, 90, 0.08)' },
+      { id: 'pagamento',   cor: 'rgba(9, 5, 10, 0.5)' }        // encerramento — esfria
+    ];
+
+    var alvos = [];
+    capitulos.forEach(function (c) {
+      var el = document.getElementById(c.id);
+      if (el) alvos.push({ el: el, cor: c.cor });
+    });
+    if (!alvos.length) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        for (var i = 0; i < alvos.length; i++) {
+          if (alvos[i].el === entry.target) {
+            luzCap.style.background =
+              'radial-gradient(ellipse 75% 55% at 50% 18%, ' + alvos[i].cor + ', transparent 68%)';
+            break;
+          }
+        }
+      });
+    }, { threshold: 0.35 });
+
+    alvos.forEach(function (a) { io.observe(a.el); });
+  }
+
+  /* ==========================================================
+     PROFUNDIDADE DO HERO AO ROLAR
+     ------------------------------------------------------------
+     Sem isso, o Hero simplesmente sai da tela quando o usuário
+     rola — um corte seco de banner para conteúdo. Aqui a cena
+     recua para dentro do quadro: a composição ritual (mais "longe"
+     da câmera) se afasta, perde nitidez e luz mais rápido que o
+     texto (mais "perto"), como profundidade de campo real, não
+     um único elemento sumindo por igual. Só atua dentro da altura
+     do próprio Hero — fora dela, os estilos voltam ao neutro.
+     ========================================================== */
+  function ativarProfundidadeHero() {
+    if (!podeAnimar || isMobile) return;
+
+    var hero = $('.hero');
+    var ritual = $('.hero-ritual');
+    var texto = $('.hero-text');
+    if (!hero || !ritual) return;
+
+    var alturaHero = hero.offsetHeight || window.innerHeight;
+    window.addEventListener('resize', function () {
+      alturaHero = hero.offsetHeight || window.innerHeight;
+    }, { passive: true });
+
+    function aplicar() {
+      var p = window.scrollY / (alturaHero * 0.9);
+      if (p <= 0) {
+        ritual.style.transform = '';
+        ritual.style.filter = '';
+        ritual.style.opacity = '';
+        if (texto) { texto.style.transform = ''; texto.style.opacity = ''; }
+        return;
+      }
+      if (p >= 1) p = 1;
+
+      var reculoRitual = p * 46;
+      var escalaRitual = 1 - p * 0.05;
+      var desfoqueRitual = p * 5;
+      ritual.style.transform = 'translateY(' + reculoRitual.toFixed(1) + 'px) scale(' + escalaRitual.toFixed(3) + ')';
+      ritual.style.filter = desfoqueRitual > 0.15 ? 'blur(' + desfoqueRitual.toFixed(1) + 'px)' : '';
+      ritual.style.opacity = (1 - p * 0.7).toFixed(3);
+
+      if (texto) {
+        var reculoTexto = p * 24;
+        texto.style.transform = 'translateY(' + reculoTexto.toFixed(1) + 'px)';
+        texto.style.opacity = (1 - p * 0.85).toFixed(3);
+      }
+    }
+    registrarAnimador(aplicar);
+  }
+
+  /* ==========================================================
      LUZ GLOBAL — temperatura muda ao longo de ~2 minutos
      (vinho profundo ⇄ âmbar muito discreto)
      ========================================================== */
@@ -503,14 +679,34 @@
      5. SCROLL REVEAL — animações de entrada com blur
      ========================================================== */
   function prepararReveal() {
-    $$('.social-grid, .video-grid, .cards-grid, .payment-grid, .depoimentos-grid').forEach(function (grid) {
-      $$(':scope > *', grid).forEach(function (el, i) {
+    $$('.social-grid, .video-grid, .cards-grid, .payment-grid, .depoimentos-grid, .relacionados-grid, .processo-grid')
+      .forEach(function (grid) {
+        $$(':scope > *', grid).forEach(function (el, i) {
+          el.classList.add('reveal');
+          el.style.transitionDelay = (i * 120) + 'ms';
+        });
+      });
+    $$('.sobre h2, .servicos h2, .agendamento h2, .cadastro h2, #pagamento h2, .secao-intro, .hero-text, .ritual-intro-copy, .presence-intro, .ritual-step')
+      .forEach(function (el) { el.classList.add('reveal'); });
+
+    /* Páginas internas de serviço (tarot, magia, cursos...) eram
+       lidas de uma vez, como um artigo estático — quebrando o
+       "scroll como narrativa" do resto do site assim que alguém
+       clicava em "Saiba mais". Cada bloco de conteúdo agora chega
+       em seu próprio tempo, como capítulos, não como um texto que
+       já estava todo ali. */
+    $$('.page-hero .eyebrow, .page-hero h1, .page-hero p, .secao-titulo, .artigo-lead, .bloco, .info-box, .faq-wrap, .tabela-precos, .glossario')
+      .forEach(function (el) { el.classList.add('reveal'); });
+
+    /* O rodapé é o encerramento da cena, não um bloco que só
+       "está lá" ao fim do HTML — ele deve chegar com o mesmo
+       silêncio contemplativo do resto da página. */
+    $$('footer').forEach(function (rodape) {
+      $$(':scope > *', rodape).forEach(function (el, i) {
         el.classList.add('reveal');
-        el.style.transitionDelay = (i * 120) + 'ms';
+        el.style.transitionDelay = (i * 140) + 'ms';
       });
     });
-    $$('.sobre h2, .servicos h2, .agendamento h2, .cadastro h2, #pagamento h2, .secao-intro, .hero-text')
-      .forEach(function (el) { el.classList.add('reveal'); });
   }
 
   if (podeAnimar && 'IntersectionObserver' in window) {
@@ -626,6 +822,7 @@
   var horariosGrid = $('#horarios');
   var btnConfirmar = $('#btn-confirmar-agenda');
   var msgAgenda = $('#msg-agenda');
+  var reflexoAgenda = $('#reflexo-agenda');
   var horarioSelecionado = null;
 
   if (inputData) {
@@ -635,15 +832,55 @@
     inputData.min = dataLocal.toISOString().split('T')[0];
   }
 
+  var DIAS_SEMANA = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+  function atualizarReflexo() {
+    if (!reflexoAgenda) return;
+    var data = inputData ? inputData.value : '';
+
+    if (!data && !horarioSelecionado) {
+      reflexoAgenda.classList.remove('visivel');
+      return;
+    }
+
+    var frase;
+    if (data && horarioSelecionado) {
+      var partes = data.split('-').map(Number);
+      var dataObj = new Date(partes[0], partes[1] - 1, partes[2]);
+      frase = 'Você escolheu ' + DIAS_SEMANA[dataObj.getDay()] + ', ' + partes[2] + ' de ' +
+        MESES[partes[1] - 1] + ', às ' + horarioSelecionado + '.';
+    } else if (data) {
+      var partes2 = data.split('-').map(Number);
+      var dataObj2 = new Date(partes2[0], partes2[1] - 1, partes2[2]);
+      frase = 'Uma data já reservada — ' + DIAS_SEMANA[dataObj2.getDay()] + ', ' + partes2[2] + ' de ' + MESES[partes2[1] - 1] + '. Falta escolher o horário.';
+    } else {
+      frase = 'Um horário já reservado — falta escolher o dia.';
+    }
+
+    reflexoAgenda.textContent = frase;
+    reflexoAgenda.classList.add('visivel');
+  }
+
+  if (inputData) {
+    inputData.addEventListener('change', atualizarReflexo);
+  }
+
   if (horariosGrid) {
     horariosGrid.addEventListener('click', function (e) {
       var btn = e.target.closest('.btn-horario');
       if (!btn) return;
+      var jaSelecionado = btn.classList.contains('selecionado');
       $$('.btn-horario', horariosGrid).forEach(function (b) {
         b.classList.remove('selecionado');
       });
-      btn.classList.add('selecionado');
-      horarioSelecionado = btn.textContent.trim();
+      if (jaSelecionado) {
+        horarioSelecionado = null;
+      } else {
+        btn.classList.add('selecionado');
+        horarioSelecionado = btn.textContent.trim();
+      }
+      atualizarReflexo();
     });
   }
 
@@ -661,6 +898,7 @@
       msgAgenda.textContent =
         '☾ Consulta solicitada para ' + partes[2] + '/' + partes[1] + '/' + partes[0] +
         ' às ' + horarioSelecionado + '. Em breve entraremos em contato.';
+      if (reflexoAgenda) reflexoAgenda.classList.remove('visivel');
     });
   }
 
@@ -866,6 +1104,9 @@
      INICIALIZAÇÃO DA ATMOSFERA
      ========================================================== */
   criarAtmosfera();
+  abrirCena();
+  ativarLuzPorCapitulo();
+  ativarProfundidadeHero();
   revelarConstelacao();
   lancarEstrelaCadente();
   ativarCarta3D();
