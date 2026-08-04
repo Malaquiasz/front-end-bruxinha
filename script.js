@@ -202,7 +202,7 @@
      ------------------------------------------------------------
      A cena não "aparece" — ela se revela, como se uma vela
      estivesse sendo acesa num cômodo escuro. A ordem segue a
-     lógica da luz, não a ordem do HTML: primeiro a chama (fonte),
+     lógica da luz, não a ordem do HTML: primeiro a luz ambiente,
      depois os objetos que refletem luz (lua, cristal), depois o
      objeto de maior significado (a carta), e só por último o
      texto — como se as palavras só pudessem ser lidas depois que
@@ -226,7 +226,6 @@
     document.body.insertBefore(limiar, document.body.firstChild);
 
     var elementos = [
-      { el: $('.vela', ritual),                atraso: 150,  duracao: 1300, deslocY: 6  },
       { el: $('.lua', ritual),                 atraso: 650,  duracao: 1800, deslocY: -10 },
       { el: $('.cristal', ritual),              atraso: 950,  duracao: 1700, deslocY: 10 },
       { el: $('.carta-tarot', ritual),          atraso: 1200, duracao: 1900, deslocY: 16 },
@@ -403,29 +402,6 @@
         'linear-gradient(180deg, #09050A, #180913 52%, #09050A)';
     }
     registrarAnimador(aplicar);
-  }
-
-  /* ==========================================================
-     CHAMA ORGÂNICA — nunca balança igual duas vezes
-     ========================================================== */
-  function ativarChama() {
-    var chama = $('.vela .chama');
-    if (!chama || !podeAnimar) return;
-
-    var raiz = (Math.random() * Math.PI * 2);
-    function mover(agora) {
-      var t = agora / 1000;
-      var r1 = Math.sin(t * 1.15 + raiz) * 0.5;
-      var r2 = Math.sin(t * 0.7 + raiz * 1.7) * 0.32;
-      var r3 = Math.sin(t * 0.43 + raiz * 0.9) * 0.24;
-      var dx = r1 + r2 + r3;
-      var sway = dx * 3.2;
-      var dy = Math.sin(t * 0.9 + raiz * 2.1) * 2.1;
-      var escala = 1 + Math.sin(t * 1.3 + raiz) * 0.05 + Math.sin(t * 0.53 + raiz * 3.1) * 0.03;
-      chama.style.transform =
-        'translateX(calc(-50% + ' + sway.toFixed(2) + 'px)) translateY(' + dy.toFixed(2) + 'px) scale(' + escala.toFixed(3) + ')';
-    }
-    registrarAnimador(mover);
   }
 
   /* ==========================================================
@@ -1135,7 +1111,6 @@
   lancarEstrelaCadente();
   ativarCarta3D();
   ativarCursor();
-  ativarChama();
   ativarBrilhoLua();
   ativarLuzGlobal();
   ativarParallax();
