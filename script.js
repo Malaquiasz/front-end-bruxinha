@@ -906,6 +906,26 @@
      9. CADASTRO RÁPIDO — validação + máscara de telefone
      ========================================================== */
   var formCadastro = $('#form-cadastro');
+  var inputNomeCadastro = $('#nome');
+  var reflexoCadastro = $('#reflexo-cadastro');
+
+  /* O cadastro é a abertura do canal, não uma fila. Enquanto a
+     pessoa escreve o nome, uma linha de presença a reconhece —
+     a mesma linguagem do reflexo-agenda, que acolhe o momento
+     escolhido antes da confirmação. Aqui, quem escreve é acolhido
+     antes de qualquer envio. */
+  if (inputNomeCadastro && reflexoCadastro) {
+    inputNomeCadastro.addEventListener('input', function () {
+      var nome = inputNomeCadastro.value.trim();
+      if (nome.length >= 2) {
+        reflexoCadastro.textContent = 'À sua espera, ' + nome + ' ✦';
+        reflexoCadastro.classList.add('visivel');
+      } else {
+        reflexoCadastro.textContent = '';
+        reflexoCadastro.classList.remove('visivel');
+      }
+    });
+  }
 
   if (formCadastro) {
     formCadastro.addEventListener('submit', function (e) {
@@ -927,6 +947,10 @@
       }
 
       msg.textContent = '☾ Cadastro recebido! Em breve entraremos em contato. ✦';
+      if (reflexoCadastro) {
+        reflexoCadastro.textContent = '';
+        reflexoCadastro.classList.remove('visivel');
+      }
       formCadastro.reset();
       var tel = $('#telefone');
       if (tel) tel.value = '';

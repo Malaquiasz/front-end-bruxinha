@@ -442,15 +442,38 @@
 
 <!-- CADASTRO -->
 <section class="cadastro container" id="cadastro">
-  <h2 style="text-align:center; margin-bottom:1.2rem; font-size:clamp(1.6rem,3vw,2.2rem);">Cadastro Rápido</h2>
-  <p class="secao-intro">Só o essencial para entrarmos em contato sobre sua consulta.</p>
+
+  <!-- Carta — Este gesto é o primeiro passo do ritual: escrever
+       teu nome num lugar de escuta. É a carta que abre o canal,
+       não um número de balcão. O objeto é a materialização do ato
+       da seção — não decoração. Muito discreto, como os demais. -->
+  <svg class="objeto-simbolico carta-cadastro" viewBox="0 0 120 150" aria-hidden="true">
+    <rect x="12" y="12" width="96" height="126" rx="4" fill="url(#carta-cadastro-grad)" stroke="rgba(199,169,107,0.4)" stroke-width="1.2"/>
+    <rect x="18" y="18" width="84" height="114" rx="3" fill="none" stroke="rgba(245,236,228,0.1)" stroke-width="0.8"/>
+    <line x1="30" y1="36" x2="90" y2="36" stroke="rgba(199,169,107,0.5)" stroke-width="1.2"/>
+    <line x1="30" y1="48" x2="78" y2="48" stroke="rgba(245,236,228,0.18)" stroke-width="0.8"/>
+    <line x1="30" y1="58" x2="84" y2="58" stroke="rgba(245,236,228,0.14)" stroke-width="0.8"/>
+    <line x1="30" y1="68" x2="66" y2="68" stroke="rgba(245,236,228,0.14)" stroke-width="0.8"/>
+    <circle cx="60" cy="96" r="12" fill="none" stroke="rgba(199,169,107,0.35)" stroke-width="1"/>
+    <path d="M60 88 L60 96 L66 100" fill="none" stroke="rgba(199,169,107,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+    <defs>
+      <linearGradient id="carta-cadastro-grad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="rgba(245,236,228,0.12)"/>
+        <stop offset="55%" stop-color="rgba(165,63,72,0.08)"/>
+        <stop offset="100%" stop-color="rgba(9,5,10,0.3)"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <h2 class="cadastro-titulo">Cadastro Rápido</h2>
+  <p class="secao-intro convite">Só o essencial para entrarmos em contato — e que o seu nome chegue ao nosso ouvido com a mesma presença com que você o escreve.</p>
   <form class="form-cadastro" id="form-cadastro">
     <div class="form-group">
-      <label for="nome">Nome</label>
+      <label for="nome">Como podemos te chamar?</label>
       <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
     </div>
     <div class="form-group">
-      <label for="email">E-mail</label>
+      <label for="email">Para onde enviamos o retorno?</label>
       <input type="email" id="email" name="email" placeholder="seu@email.com" required>
     </div>
     <div class="form-group">
@@ -458,7 +481,8 @@
       <input type="tel" id="telefone" name="telefone" placeholder="(  ) _____-____">
     </div>
     <button type="submit" class="btn-primary">Enviar cadastro</button>
-    <p id="msg-cadastro" style="color:var(--gold); font-size:0.9rem; min-height:1.2em;"></p>
+    <p id="reflexo-cadastro" class="reflexo-cadastro" aria-live="polite"></p>
+    <p id="msg-cadastro" class="msg-cadastro"></p>
   </form>
 </section>
 

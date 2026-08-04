@@ -1535,14 +1535,41 @@ body.carregado .estrela-cadente {
 /* ============================================================
    FORMULÁRIOS
    ============================================================ */
-.cadastro { padding-bottom: 3rem; }
+.cadastro {
+  position: relative;
+  text-align: center;
+  padding-bottom: 3rem;
+}
 
+.cadastro-titulo {
+  margin-bottom: 1.2rem;
+}
+
+/* Carta — o objeto que abre o canal de contato. Herda o
+   posicionamento/opacidade de .objeto-simbolico e repousa
+   com a mesma respiração lenta dos demais objetos rituais. */
+.carta-cadastro {
+  top: -0.5rem;
+  right: 0.5rem;
+  width: 96px;
+  animation: respirar 14s ease-in-out infinite;
+}
+
+/* O formulário deixa de ser um balcão de campos soltos e vira
+   uma peça exposta — o mesmo cartão ritual dos blocos, com a
+   presença de um objeto sobre a mesa. Os campos ficam, mas o
+   conjunto agora é um lugar, não uma fila. */
 .form-cadastro {
   max-width: 520px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  background: linear-gradient(160deg, rgba(36, 17, 31, 0.55), rgba(24, 9, 19, 0.88));
+  border: 1px solid rgba(199, 169, 107, 0.16);
+  border-radius: 8px;
+  padding: 2rem 2rem 1.8rem;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
 }
 
 .form-group {
@@ -1588,6 +1615,30 @@ body.carregado .estrela-cadente {
   outline: none;
   border-color: var(--gold);
   box-shadow: 0 0 0 1px rgba(199, 169, 107, 0.3), 0 0 26px rgba(199, 169, 107, 0.08);
+}
+
+/* O reflexo do cadastro — a mesma linguagem do reflexo-agenda:
+   o ato de escrever o nome é reconhecido em voz suave, antes de
+   qualquer envio. O formulário não é uma fila; é uma escuta. */
+.reflexo-cadastro {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(199, 169, 107, 0.85);
+  min-height: 1.6em;
+  margin: 0.2rem 0 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.7s ease, transform 0.7s var(--ease-slow);
+}
+
+.reflexo-cadastro.visivel { opacity: 1; transform: none; }
+
+.msg-cadastro {
+  color: var(--gold);
+  font-size: 0.9rem;
+  min-height: 1.2em;
+  margin-top: 0.2rem;
 }
 
 /* ============================================================
